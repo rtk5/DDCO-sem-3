@@ -1,7 +1,7 @@
-module and_test;
+module or_test;
 reg a,b;
 wire y;
-and(y,a,b);
+or(y,a,b);
 initial
 begin
 #0 a=0;b=0;
@@ -15,7 +15,7 @@ $monitor($time,"a=%b,b=%b,y=%b",a,b,y);
 end
 initial
 begin
-$dumpfile("and2_test.vcd");
-$dumpvars(0,and_test);
+$dumpfile("or2_test.vcd");
+$dumpvars(0,or_test);
 end
 endmodule

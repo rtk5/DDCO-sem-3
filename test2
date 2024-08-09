@@ -1,0 +1,68 @@
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x562d8289e9a0 .scope module, "or_test" "or_test" 2 1;
+ .timescale 0 0;
+L_0x562d828c3620 .functor OR 1, v0x562d82877f90_0, v0x562d828c31d0_0, C4<0>, C4<0>;
+v0x562d82877f90_0 .var "a", 0 0;
+v0x562d828c31d0_0 .var "b", 0 0;
+v0x562d828c3290_0 .net "y", 0 0, L_0x562d828c3620;  1 drivers
+S_0x562d82877d90 .scope module, "orgate" "orgate" 3 1;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "y";
+    .port_info 1 /INPUT 1 "a";
+    .port_info 2 /INPUT 1 "b";
+    .port_info 3 /NODIR 0 "unnamed";
+o0x7f805210f0a8 .functor BUFZ 1, C4<z>; HiZ drive
+o0x7f805210f0d8 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x562d828c3720 .functor OR 1, o0x7f805210f0a8, o0x7f805210f0d8, C4<0>, C4<0>;
+v0x562d828c3330_0 .net "a", 0 0, o0x7f805210f0a8;  0 drivers
+v0x562d828c3410_0 .net "b", 0 0, o0x7f805210f0d8;  0 drivers
+v0x562d828c34d0_0 .net "y", 0 0, L_0x562d828c3720;  1 drivers
+    .scope S_0x562d8289e9a0;
+T_0 ;
+    %delay 0, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x562d82877f90_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x562d828c31d0_0, 0, 1;
+    %delay 5, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x562d82877f90_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x562d828c31d0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x562d82877f90_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x562d828c31d0_0, 0, 1;
+    %delay 15, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x562d82877f90_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x562d828c31d0_0, 0, 1;
+    %end;
+    .thread T_0;
+    .scope S_0x562d8289e9a0;
+T_1 ;
+    %vpi_call 2 14 "$monitor", $time, "a=%b,b=%b,y=%b", v0x562d82877f90_0, v0x562d828c31d0_0, v0x562d828c3290_0 {0 0 0};
+    %end;
+    .thread T_1;
+    .scope S_0x562d8289e9a0;
+T_2 ;
+    %vpi_call 2 18 "$dumpfile", "or2_test.vcd" {0 0 0};
+    %vpi_call 2 19 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x562d8289e9a0 {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "or2_tb.v";
+    "or2.v";
