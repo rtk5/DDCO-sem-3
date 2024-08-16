@@ -1,4 +1,4 @@
-module andgate (y,a, );  
+module notgate (y,a, );  
 input a;
 output y;
 assign y = !a;
