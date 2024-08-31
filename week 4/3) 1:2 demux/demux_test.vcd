@@ -1,5 +1,5 @@
 $date
-	Fri Aug 30 23:11:13 2024
+	Sat Aug 31 13:51:03 2024
 $end
 $version
 	Icarus Verilog
@@ -22,18 +22,13 @@ $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-x$
-x#
-x"
-x!
-$end
-#5
-0"
-0!
 0$
 0#
-#10
+0"
+0!
+$end
+#5
 1$
-#15
+#10
 1!
 1#
