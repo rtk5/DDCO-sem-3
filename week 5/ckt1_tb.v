@@ -1,39 +1,16 @@
 module tb_top_module;
 reg [2:0] i1;
 reg i2;
-
 wire Sum1, Cout1;
 
-top_module uut (
-.i1(i1), 
-.i2(i2), 
-.Sum1(Sum1), 
-.Cout1(Cout1)
-);
-
+top_module uut (.i1(i1), .i2(i2), .Sum1(Sum1), .Cout1(Cout1));
 initial begin
-i1 = 3'b000;
-i2 = 1'b0;
-#10;
-
-i1 = 3'b001;
-i2 = 1'b1;
-#10;
-
-i1 = 3'b010;
-i2 = 1'b0;
-#10;
-
-i1 = 3'b011;
-i2 = 1'b1;
-#10;
-
-i1 = 3'b010;
-i2 = 1'b0;
-#10;
-
-i1 = 3'b011;
-i2 = 1'b1;
+i1 = 3'b000;i2 = 1'b0;
+#10;i1 = 3'b001;i2 = 1'b1;
+#10;i1 = 3'b010;i2 = 1'b0;
+#10;i1 = 3'b011;i2 = 1'b1;
+#10;i1 = 3'b010;i2 = 1'b0;
+#10;i1 = 3'b011;i2 = 1'b1;
 #10;
 
 $finish;
