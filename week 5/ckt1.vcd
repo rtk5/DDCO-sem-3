@@ -1,0 +1,200 @@
+$date
+	Fri Sep  6 14:44:39 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_top_module $end
+$var wire 1 ! Sum1 $end
+$var wire 1 " Cout1 $end
+$var reg 3 # i1 [2:0] $end
+$var reg 1 $ i2 $end
+$scope module uut $end
+$var wire 3 % i1 [2:0] $end
+$var wire 1 $ i2 $end
+$var wire 1 ! Sum1 $end
+$var wire 1 & Sum0 $end
+$var wire 1 " Cout1 $end
+$var wire 1 ' Cout0 $end
+$scope module FA0 $end
+$var wire 1 ( A $end
+$var wire 1 ) B $end
+$var wire 1 * C $end
+$var wire 1 & sum $end
+$var wire 1 ' carry $end
+$var wire 1 + W2 $end
+$var wire 1 , W1 $end
+$var wire 1 - C1 $end
+$scope module HA1 $end
+$var wire 1 ( A $end
+$var wire 1 ) B $end
+$var wire 1 , sum $end
+$var wire 1 + carry $end
+$scope module A1 $end
+$var wire 1 ( a $end
+$var wire 1 ) b $end
+$var wire 1 + y $end
+$upscope $end
+$scope module X1 $end
+$var wire 1 ( a $end
+$var wire 1 ) b $end
+$var wire 1 , y $end
+$upscope $end
+$upscope $end
+$scope module HA2 $end
+$var wire 1 , A $end
+$var wire 1 * B $end
+$var wire 1 & sum $end
+$var wire 1 - carry $end
+$scope module A1 $end
+$var wire 1 , a $end
+$var wire 1 * b $end
+$var wire 1 - y $end
+$upscope $end
+$scope module X1 $end
+$var wire 1 , a $end
+$var wire 1 * b $end
+$var wire 1 & y $end
+$upscope $end
+$upscope $end
+$scope module OG $end
+$var wire 1 + a $end
+$var wire 1 - b $end
+$var wire 1 ' y $end
+$upscope $end
+$upscope $end
+$scope module FA1 $end
+$var wire 1 $ A $end
+$var wire 1 & B $end
+$var wire 1 ' C $end
+$var wire 1 ! sum $end
+$var wire 1 " carry $end
+$var wire 1 . W2 $end
+$var wire 1 / W1 $end
+$var wire 1 0 C1 $end
+$scope module HA1 $end
+$var wire 1 $ A $end
+$var wire 1 & B $end
+$var wire 1 / sum $end
+$var wire 1 . carry $end
+$scope module A1 $end
+$var wire 1 $ a $end
+$var wire 1 & b $end
+$var wire 1 . y $end
+$upscope $end
+$scope module X1 $end
+$var wire 1 $ a $end
+$var wire 1 & b $end
+$var wire 1 / y $end
+$upscope $end
+$upscope $end
+$scope module HA2 $end
+$var wire 1 / A $end
+$var wire 1 ' B $end
+$var wire 1 ! sum $end
+$var wire 1 0 carry $end
+$scope module A1 $end
+$var wire 1 / a $end
+$var wire 1 ' b $end
+$var wire 1 0 y $end
+$upscope $end
+$scope module X1 $end
+$var wire 1 / a $end
+$var wire 1 ' b $end
+$var wire 1 ! y $end
+$upscope $end
+$upscope $end
+$scope module OG $end
+$var wire 1 . a $end
+$var wire 1 0 b $end
+$var wire 1 " y $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+00
+0/
+0.
+0-
+0,
+0+
+0*
+0)
+0(
+0'
+0&
+b0 %
+0$
+b0 #
+0"
+0!
+$end
+#10
+1"
+1.
+1&
+0!
+1,
+0/
+1)
+1$
+b1 #
+b1 %
+#20
+0"
+1!
+0.
+1/
+1(
+0)
+0$
+b10 #
+b10 %
+#30
+10
+1'
+0&
+1"
+0!
+1+
+0,
+0.
+1/
+1)
+1$
+b11 #
+b11 %
+#40
+0"
+0'
+1&
+00
+1!
+0+
+1,
+1/
+0)
+0$
+b10 #
+b10 %
+#50
+10
+1'
+0&
+1"
+0!
+1+
+0,
+0.
+1/
+1)
+1$
+b11 #
+b11 %
+#60
