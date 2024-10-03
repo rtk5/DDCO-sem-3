@@ -54,5 +54,10 @@ module tb;
     #100 $finish;
   end
 
+initial begin
+    $monitor("Time = %0t , Sel = %b , Wr = %b , Op = %b , RdAddrA = %b , RdAddrB = %b , WrAddr = %b , DIn = %h , DOutA = %h , DOutB = %h , Cout = %b", 
+              $time, sel, wr, op, rd_addr_a, rd_addr_b, wr_addr, d_in, d_out_a, d_out_b, cout);
+  end
+
 
 endmodule
