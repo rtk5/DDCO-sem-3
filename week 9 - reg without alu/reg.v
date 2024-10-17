@@ -28,7 +28,6 @@ module reg_file (
     wire [15:0] dout[7:0]; // Internal outputs for 8 registers
     wire [7:0] load; // Load signals for each register
 
-    // Instantiate 8 registers (dfrl_16)
     dfrl_16 dfrl_16_0(clk, reset, load[0], d_in, dout[0]);
     dfrl_16 dfrl_16_1(clk, reset, load[1], d_in, dout[1]);
     dfrl_16 dfrl_16_2(clk, reset, load[2], d_in, dout[2]);
@@ -38,10 +37,8 @@ module reg_file (
     dfrl_16 dfrl_16_6(clk, reset, load[6], d_in, dout[6]);
     dfrl_16 dfrl_16_7(clk, reset, load[7], d_in, dout[7]);
 
-    // Generate load signals based on the write address
     assign load = {8{wr}} & (1 << wr_addr);
 
-    // Multiplexers to read data from the selected registers
     assign d_out_a = (rd_addr_a == 3'd0) ? dout[0] :
                      (rd_addr_a == 3'd1) ? dout[1] :
                      (rd_addr_a == 3'd2) ? dout[2] :
