@@ -1,79 +1,89 @@
 module fa (input wire i0, i1, cin, output wire sum, cout);
-    wire t0, t1, t2;
-    
-    // Sum logic using XOR gates
-    xor (t0, i0, i1);
-    xor (sum, t0, cin);
-    
-    // Carry out logic using AND gates
-    and (t1, i0, i1);
-    and (t2, t0, cin);
-    
-    // Final carry out using OR gate
-    or (cout, t1, t2);
+   wire t0, t1, t2;
+ 
+xor3 _i0 (i0, i1, cin, sum);
+  
+and2 _i1 (i0, i1, t0);
+ 
+and2 _i2 (i1, cin, t1);
+  
+and2 _i3 (cin, i0, t2);
+  
+or3 _i4 (t0, t1, t2, cout);
+
 endmodule
 
 module addsub (input wire addsub, i0, i1, cin, output wire sumdiff, cout);
-    wire t;
-    
-    // XOR to determine if we are adding or subtracting
-    xor (t, addsub, i1);
-    
-    // Use the full adder for add/subtract
-    fa fa0 (.i0(i0), .i1(t), .cin(cin), .sum(sumdiff), .cout(cout));
+
+wire t;
+  
+fa _i0 (i0, t, cin, sumdiff, cout);
+  
+xor2 _i1 (i1, addsub, t);
+
 endmodule
 
-module pc_slice (input wire clk, reset, cin, load, inc, sub, input wire offset, output wire cout, pc);
-    wire in, inc_;
-    
-    // Invert the sub signal
-    not (inc_, sub);
-    
-    // Logic to handle incrementing or adding/subtracting
-    and (and2_0, inc, ~load);
-    addsub addsub_0 (.addsub(sub), .i0(pc), .i1(offset), .cin(cin), .sumdiff(in), .cout(cout));
-    
-    // Flip-flop for the program counter
-    dfrl dfrl_0 (.clk(clk), .reset(reset), .load(load), .d(in), .q(pc));
+module pc_slice (input wire clk, reset, cin, load, inc, sub, offset,
+  output wire cout, pc);
+ 
+ wire in, inc_;
+  
+invert invert_0 (inc, inc_);
+ 
+ and2 and2_0 (offset, inc_, t);
+  
+addsub addsub_0 (sub, pc, t, cin, in, cout);
+
+ dfrl dfrl_0 (clk, reset, load, in, pc);
+
 endmodule
 
-module pc_slice0 (input wire clk, reset, cin, load, inc, sub, input wire offset, output wire cout, pc);
-    wire in;
-    
-    // Logic for the OR gate
-    or (or2_0, inc, load);
-    
-    // Add/Sub module for add/subtract operations
-    addsub addsub_0 (.addsub(sub), .i0(pc), .i1(offset), .cin(cin), .sumdiff(in), .cout(cout));
-    
-    // Flip-flop to store the PC value
-    dfrl dfrl_0 (.clk(clk), .reset(reset), .load(load), .d(in), .q(pc));
-endmodule
+module pc_slice0 (input wire clk, reset, cin, load, inc, sub, offset,  output wire cout, pc);
+  
+wire in;
+ 
+ or2 or2_0 (offset, inc, t);
+ 
+ addsub addsub_0 (sub, pc, t, cin, in, cout);
+  
+dfrl dfrl_0 (clk, reset, load, in, pc);
 
-module dfrl(input wire clk, reset, load, input wire d, output reg q);
-    always @(posedge clk or posedge reset) begin
-        if (reset) begin
-            q <= 1'b0;  // Reset the flip-flop
-        end else if (load) begin
-            q <= d;     // Load the input data into the flip-flop
-        end
-    end
 endmodule
 
 module pc (input wire clk, reset, inc, add, sub, input wire [15:0] offset, output wire [15:0] pc);
-    wire load;
-    wire [15:0] c;
-    
-    // OR gate to determine whether to increment or add
-    assign load = inc | add | sub;
-    
-    // Instantiating the PC slices
-    pc_slice0 pc_slice_0 (.clk(clk), .reset(reset), .cin(1'b0), .load(load), .inc(inc), .sub(sub), .offset(offset[0]), .cout(c[0]), .pc(pc[0]));
-    
-    genvar i;
-    generate
-        for (i = 1; i < 16; i = i + 1) begin : pc_slices
-            pc_slice pc_slice_1 (.clk(clk), .reset(reset), .cin(c[i-1]), .load(load), .inc(inc), .sub(sub), .offset(offset[i]), .cout(c[i]), .pc(pc[i]));
-        end
-    endgenerate
+ 
+ input wire load;
+ input wire [15:0] c;
+ 
+ or3 or3_0 (inc, add, sub, load);
+  
+pc_slice0 pc_slice_0 (clk, reset, sub, load, inc, sub, offset[0], c[0], pc[0]);
+ 
+ pc_slice pc_slice_1 (clk, reset, c[0], load, inc, sub, offset[1], c[1], pc[1]);
+  
+pc_slice pc_slice_2 (clk, reset, c[1], load, inc, sub, offset[2], c[2], pc[2]);
+ 
+ pc_slice pc_slice_3 (clk, reset, c[2], load, inc, sub, offset[3], c[3], pc[3]);
+
+  pc_slice pc_slice_4 (clk, reset, c[3], load, inc, sub, offset[4], c[4], pc[4]);
+ 
+ pc_slice pc_slice_5 (clk, reset, c[4], load, inc, sub, offset[5], c[5], pc[5]);
+ 
+ pc_slice pc_slice_6 (clk, reset, c[5], load, inc, sub, offset[6], c[6], pc[6]);
+ 
+ pc_slice pc_slice_7 (clk, reset, c[6], load, inc, sub, offset[7], c[7], pc[7]);
+  
+pc_slice pc_slice_8 (clk, reset, c[7], load, inc, sub, offset[8], c[8], pc[8]);
+
+  pc_slice pc_slice_9 (clk, reset, c[8], load, inc, sub, offset[9], c[9], pc[9]);
+  
+pc_slice pc_slice_10 (clk, reset, c[9], load, inc, sub, offset[10], c[10], pc[10]);
+  
+pc_slice pc_slice_11 (clk, reset, c[10], load, inc, sub, offset[11], c[11], pc[11]);
+  
+pc_slice pc_slice_12 (clk, reset, c[11], load, inc, sub, offset[12], c[12], pc[12]);
+  pc_slice pc_slice_13 (clk, reset, c[12], load, inc, sub, offset[13], c[13], pc[13]);
+  pc_slice pc_slice_14 (clk, reset, c[13], load, inc, sub, offset[14], c[14], pc[14]);
+  pc_slice pc_slice_15 (clk, reset, c[14], load, inc, sub, offset[15], c[15], pc[15]);
+
 endmodule

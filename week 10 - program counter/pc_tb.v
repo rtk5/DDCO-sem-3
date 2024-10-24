@@ -1,70 +1,39 @@
-`timescale 1ns/1ps
-module tb_pc;
+`timescale 1 ns / 100 ps
+`define TESTVECS 5
 
+module tb;
   reg clk, reset, inc, add, sub;
   reg [15:0] offset;
   wire [15:0] pc;
-  
-  // Instantiate the Program Counter (pc) module
-  pc uut (
-    .clk(clk),
-    .reset(reset),
-    .inc(inc),
-    .add(add),
-    .sub(sub),
-    .offset(offset),
-    .pc(pc)
-  );
+  reg [18:0] test_vecs [0:(`TESTVECS-1)];
+  integer i;
+  initial begin $dumpfile("tb_pc.vcd"); $dumpvars(0,tb); end
+  initial begin reset = 1'b1; #12.5 reset = 1'b0; end
+  initial clk = 1'b0; always #5 clk =~ clk;
 
-  // Clock generation (50% duty cycle)
-  always #5 clk = ~clk;
-
-  // Test sequence
   initial begin
-    // Initialize signals
-    clk = 0;
-    reset = 1;
-    inc = 0;
-    add = 0;
-    sub = 0;
-    offset = 16'h0000;
-
-    // Apply reset
-    #10 reset = 0;
-    
-    // CASE 1: inc = 1, add = 0, sub = 0, offset = 0000
-    // Expected output: pc = 0001
-    #10 inc = 1; add = 0; sub = 0; offset = 16'h0000;
-    #10 inc = 0; // Wait one clock cycle to observe the output
-    
-    // CASE 2: inc = 0, add = 1, sub = 0, offset = 00A5
-    // Expected output: pc = 00A6
-    #10 inc = 0; add = 1; sub = 0; offset = 16'h00A5;
-    #10 add = 0; // Wait one clock cycle to observe the output
-    
-    // CASE 3: inc = 0, add = 0, sub = 0, offset = 0000
-    // Expected output: pc = 00A6 (no change)
-    #10 inc = 0; add = 0; sub = 0; offset = 16'h0000;
-    #10; // Wait one clock cycle to observe the output
-    
-    // CASE 4: inc = 1, add = 0, sub = 0, offset = 0000
-    // Expected output: pc = 00A7
-    #10 inc = 1; add = 0; sub = 0; offset = 16'h0000;
-    #10 inc = 0; // Wait one clock cycle to observe the output
-    
-    // CASE 5: inc = 0, add = 0, sub = 1, offset = 0014
-    // Expected output: pc = pc - offset = 00A7 - 0014 = 0093
-    #10 inc = 0; add = 0; sub = 1; offset = 16'h0014;
-    #10 sub = 0; // Wait one clock cycle to observe the output
-    
-    // Finish the simulation
-    #10 $finish;
+    test_vecs[0][18] = 1'b1; test_vecs[0][17] = 1'b0; test_vecs[0][16] = 1'b0;
+    test_vecs[0][15:0] = 15'hxx;
+    test_vecs[1][18] = 1'b0; test_vecs[1][17] = 1'b1; test_vecs[1][16] = 1'b0;
+    test_vecs[1][15:0] = 15'ha5;
+    test_vecs[2][18] = 1'b0; test_vecs[2][17] = 1'b0; test_vecs[2][16] = 1'b0;
+    test_vecs[2][15:0] = 15'hxx;
+    test_vecs[3][18] = 1'b1; test_vecs[3][17] = 1'b0; test_vecs[3][16] = 1'b0;
+    test_vecs[3][15:0] = 15'hxx;
+    test_vecs[4][18] = 1'b0; test_vecs[4][17] = 1'b0; test_vecs[4][16] = 1'b1;
+    test_vecs[4][15:0] = 15'h14;
   end
 
-  // Monitor changes in the PC value
+  initial {inc, add, sub, offset} = 0;
+  pc pc_0 (clk, reset, inc, add, sub, offset, pc);
   initial begin
-    $monitor("Time: %0t | inc: %b, add: %b, sub: %b, offset: %h, pc: %h", 
-             $time, inc, add, sub, offset, pc);
+    #6 for(i=0;i<`TESTVECS;i=i+1)
+      begin #10 {inc, add, sub, offset}=test_vecs[i]; end
+    #100 $finish;
   end
+
+always@(reset or inc or add or sub )
+
+$monitor("At time = %t, Reset= %b,inc=%b, add=%b,sub = %b,pc =%h ", $time,reset,inc,add,sub,pc);
 
 endmodule
